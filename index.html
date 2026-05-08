@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ClipCraft AI — Intelligent writing and presentation assistant" />
+  <title>ClipCraft AI</title>
+  <link rel="icon" href="assets/clipcraft-logo.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+<div class="app" id="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="brand">
+        <img src="assets/clipcraft-logo.png" class="brand-logo" alt="ClipCraft AI" />
+        <span class="brand-name">ClipCraft AI</span>
+      </div>
+      <button class="icon-btn" id="toggleSidebar" aria-label="Collapse sidebar">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+
+    <button class="new-chat-btn" id="newChat">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      New Chat
+    </button>
+
+    <div class="nav-section">
+      <p class="nav-section-label">Features</p>
+      <div class="nav-item active" id="navChat" role="button" tabindex="0">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Chat
+      </div>
+      <div class="nav-item" id="navPPT" role="button" tabindex="0">
+        <img src="assets/ppt-assistant.png" style="width:16px;height:16px;border-radius:4px;object-fit:cover;" alt="" />
+        PPT Assistant
+        <span class="nav-badge">AI</span>
+      </div>
+    </div>
+
+    <nav class="history-nav">
+      <p class="history-label">History</p>
+      <ul id="historyList"></ul>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar-circle">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <span class="user-name">My Account</span>
+      </div>
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+        <svg class="sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="main">
+
+    <header class="topbar">
+      <button class="icon-btn hidden" id="sidebarOpen" aria-label="Open sidebar">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="tab-bar">
+        <button class="tab-btn active" id="chatTab">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Chat
+        </button>
+        <button class="tab-btn" id="pptTab">
+          <img src="assets/ppt-assistant.png" style="width:14px;height:14px;border-radius:3px;object-fit:cover;" alt="" />
+          PPT Assistant
+        </button>
+      </div>
+      <div class="topbar-actions">
+        <div class="model-selector" role="button" tabindex="0">
+          <span class="model-badge">ClipCraft v1</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- CHAT PANEL -->
+    <div id="chatPanel" style="display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden;">
+      <section class="chat-area" id="chatArea">
+        <div class="welcome chat-inner" id="welcome">
+          <img src="assets/clipcraft-logo.png" class="welcome-logo" alt="ClipCraft AI" />
+          <h1 class="welcome-title">What can I help you create?</h1>
+          <p class="welcome-subtitle">Ask me anything — write, explain, code, summarise, and build presentations with AI.</p>
+          <div class="suggestion-grid">
+            <button class="suggestion-card" data-prompt="Summarize this article for me in concise bullet points">
+              <span class="suggestion-icon">📄</span><span>Summarise an article</span>
+            </button>
+            <button class="suggestion-card" data-prompt="Help me write a professional email about a project delay">
+              <span class="suggestion-icon">✉️</span><span>Write a professional email</span>
+            </button>
+            <button class="suggestion-card" data-prompt="Explain machine learning to me like I'm 12 years old">
+              <span class="suggestion-icon">💡</span><span>Explain a complex concept</span>
+            </button>
+            <button class="suggestion-card" data-prompt="Generate creative ideas for a mobile app that helps people track habits">
+              <span class="suggestion-icon">🚀</span><span>Brainstorm product ideas</span>
+            </button>
+          </div>
+        </div>
+        <div id="messages"></div>
+        <div style="height:20px;flex-shrink:0;"></div>
+      </section>
+
+      <footer class="input-area">
+        <div class="chat-inner" style="padding:0;max-width:760px;width:100%;margin:0 auto;">
+          <div class="input-wrapper">
+            <button class="icon-btn" aria-label="Attach" title="Attach file" style="width:30px;height:30px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+            </button>
+            <textarea id="chatInput" class="chat-input" placeholder="Message ClipCraft AI… (Shift+Enter for new line)" rows="1" maxlength="10000" aria-label="Chat input"></textarea>
+            <button class="send-btn" id="sendBtn" disabled aria-label="Send">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+            </button>
+          </div>
+          <p class="input-hint">ClipCraft AI can make mistakes — always verify important information.</p>
+        </div>
+      </footer>
+    </div>
+
+    <!-- PPT PANEL -->
+    <div id="pptPanel" class="ppt-panel hidden">
+      <section class="chat-area" style="padding-bottom:0;">
+        <div class="ppt-hero">
+          <div class="ppt-icon-wrap">
+            <img src="assets/ppt-assistant.png" alt="PPT Assistant" />
+          </div>
+          <h1 class="ppt-title">PPT Assistant</h1>
+          <p class="ppt-subtitle">Describe your topic and I'll generate a full presentation outline — ready to export or refine in chat.</p>
+        </div>
+        <div class="ppt-options" style="margin-bottom:24px;">
+          <button class="ppt-option-card" data-prompt="A business pitch deck for a SaaS startup in the HR tech space">
+            <div class="ppt-option-icon">💼</div>
+            <div class="ppt-option-title">Business Pitch</div>
+            <div class="ppt-option-desc">Investor-ready with problem, solution, traction &amp; ask</div>
+          </button>
+          <button class="ppt-option-card" data-prompt="A research presentation on the impact of AI on the future of work">
+            <div class="ppt-option-icon">🔬</div>
+            <div class="ppt-option-title">Research Report</div>
+            <div class="ppt-option-desc">Data-driven academic slides with structured findings</div>
+          </button>
+          <button class="ppt-option-card" data-prompt="A training workshop on effective communication skills for remote teams">
+            <div class="ppt-option-icon">🎓</div>
+            <div class="ppt-option-title">Training Workshop</div>
+            <div class="ppt-option-desc">Interactive learning with exercises &amp; key takeaways</div>
+          </button>
+        </div>
+        <div id="pptContent" style="padding-bottom:16px;"></div>
+      </section>
+
+      <footer class="ppt-input-area">
+        <div class="ppt-input-inner">
+          <div class="ppt-input-wrapper">
+            <textarea id="pptInput" class="ppt-input" placeholder='Describe your presentation… e.g. "Marketing strategy for a product launch"' rows="1" maxlength="500" aria-label="PPT topic"></textarea>
+            <button class="ppt-gen-btn" id="pptGenBtn" disabled>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              Generate
+            </button>
+          </div>
+          <p class="input-hint" style="margin-top:10px;">AI-generated outline — review before presenting. PPTX export requires backend setup.</p>
+        </div>
+      </footer>
+    </div>
+
+  </main>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+<script src="js/app.js"></script>
+</body>
+</html>
